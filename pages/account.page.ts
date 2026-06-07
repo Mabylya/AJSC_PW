@@ -14,6 +14,6 @@ export class AccountPage {
   }
 
   async goto() {
-    await this.page.goto('https://practicesoftwaretesting.com/account');
+    await this.page.goto('/account');
   }
 }

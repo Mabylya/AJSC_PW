@@ -13,7 +13,7 @@ export class HomePage {
   async goto() {
     await this.page.goto('/');
   }
-async openProduct(productName: string) {
+  async openProduct(productName: string) {
     await this.page.getByText(productName, { exact: true }).click();
   }
 }

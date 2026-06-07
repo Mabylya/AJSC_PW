@@ -9,7 +9,7 @@ export class ProductDetailsPage {
 constructor(page: Page){
     this.page=page;
     this.productName=this.page.locator('h1');
-    this.productPrice = this.page.locator('[data-test="unit-price"]');
+    this.productPrice = this.page.getByTestId('unit-price');
     this.addToCartButton = this.page.getByRole('button', {
     name: 'Add to Cart',
   });
