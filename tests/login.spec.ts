@@ -6,7 +6,7 @@ test('Verify login with valid credentials', async({page}) =>{
     const loginPage = new LoginPage(page);
     const accountPage = new AccountPage(page);
 //Open URL: https://practicesoftwaretesting.com/auth/login.
-await page.goto ('/auth/login');
+await loginPage.goto ();
 
 //Fill in credentials:
 //Email: customer@practicesoftwaretesting.com
