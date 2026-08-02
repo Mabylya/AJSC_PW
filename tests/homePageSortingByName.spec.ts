@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HomePage } from "../pages/home.page"; 
+import { HomePage } from '../pages/home.page';
 
 [
   { sort: 'Name (A - Z)', ascending: true },
@@ -7,21 +7,36 @@ import { HomePage } from "../pages/home.page";
 ].forEach(({ sort, ascending }) => {
   test(`Verify user can sort products by ${sort}`, async ({ page }) => {
     const homePage = new HomePage(page);
+
     await homePage.goto();
 
-    await page.getByLabel('Sort').selectOption({ label: sort });
+    await Promise.all([
+      page.waitForResponse(response =>
+        response.url().includes('/products') &&
+        response.status() === 200
+      ),
+      homePage.selectSander(),
+    ]);
 
-await page.waitForLoadState('networkidle');
+    await Promise.all([
+      page.waitForResponse(response =>
+        response.url().includes('/products') &&
+        response.status() === 200
+      ),
+      homePage.sortBy(sort),
+    ]);
 
-const productNames = (await page.locator('.card-title').allTextContents())
-  .map(name => name.trim());
+    const productNames = (await homePage.productNames.allTextContents())
+      .map(name => name.trim());
 
-const expected = [...productNames].sort((a, b) => a.localeCompare(b));
+    const expected = [...productNames].sort((a, b) =>
+      a.localeCompare(b)
+    );
 
-if (!ascending) {
-  expected.reverse();
-}
+    if (!ascending) {
+      expected.reverse();
+    }
 
-expect(productNames).toEqual(expected);
-});
+    expect(productNames).toEqual(expected);
+  });
 });

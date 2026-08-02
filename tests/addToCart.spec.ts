@@ -23,7 +23,7 @@ const cartPage = new CartPage(page);
   // Verify alert is visible
   await expect(productDetailsPage.alert).toBeVisible({ timeout: 8000 });
 
-  // Verify alert text
+
   await expect(productDetailsPage.alert).toHaveText('Product added to shopping cart.');
 
   // Verify alert disappears within 8 seconds

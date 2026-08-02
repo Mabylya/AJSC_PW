@@ -9,7 +9,7 @@ export class LoginPage {
         this.emailField = this.page.locator('email');
         this.passwordField = this.page.locator('password');
     }
-	async login(email: string, password: string): Promise<void> {
+	async login(email: string, password: string) {
 		await this.page.getByTestId('email').fill(email);
 		await this.page.getByTestId('password').fill(password);
 		//Click the Login button.

@@ -46,12 +46,18 @@ export default defineConfig({
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      dependencies: ['setup-login'],
+      use: { ...devices['Desktop Firefox'],
+        storageState: 'playwright/.auth/user.json',
+       },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      dependencies: ['setup-login'],
+      use: { ...devices['Desktop Safari'],
+        storageState: 'playwright/.auth/user.json',
+       },
     },
 
     /* Test against mobile viewports. */

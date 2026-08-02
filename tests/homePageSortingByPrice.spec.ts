@@ -10,21 +10,20 @@ import { HomePage } from "../pages/home.page";
 
     await homePage.goto();
 
-    await page.getByLabel('Sort').selectOption({ label: sort });
+    await homePage.sortBy(sort);
 
-    await page.waitForLoadState('networkidle');
+// Wait until at least one price is visible
+await expect(homePage.productPrices.first()).toBeVisible();
 
-    const prices = (await page.locator('[data-test="product-price"]').allTextContents())
-      .map(price =>
-        Number(price.replace('$', '').trim())
-      );
+const prices = await homePage.getPrices();
 
-    const expected = [...prices].sort((a, b) => a - b);
 
-    if (!ascending) {
-      expected.reverse();
-    }
+const expected = [...prices].sort((a, b) => a - b);
 
-    expect(prices).toEqual(expected);
+if (!ascending) {
+  expected.reverse();
+}
+
+expect(prices).toEqual(expected);
   });
 });
